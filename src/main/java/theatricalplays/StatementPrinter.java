@@ -18,28 +18,27 @@ public class StatementPrinter {
       Play play = plays.get(perf.playID);
       int thisAmount = 0;
 
-      switch (play.type) {
-        case "tragedy":
+
+      if(play.type == PieceType.tragedy) {
           thisAmount = 40000;
           if (perf.audience > 30) {
             thisAmount += 1000 * (perf.audience - 30);
           }
-          break;
-        case "comedy":
+      }
+      else if(play.type == PieceType.comdey) {
           thisAmount = 30000;
           if (perf.audience > 20) {
             thisAmount += 10000 + 500 * (perf.audience - 20);
           }
           thisAmount += 300 * perf.audience;
-          break;
-        default:
-          throw new Error("unknown type: ${play.type}");
       }
-
+      else {
+        throw new Error("unkown type : ${play.type}");
+      }
       // add volume credits
       volumeCredits += Math.max(perf.audience - 30, 0);
       // add extra credit for every ten comedy attendees
-      if ("comedy".equals(play.type)) volumeCredits += Math.floor(perf.audience / 5);
+      if (PieceType.comdey==play.type) volumeCredits += Math.floor(perf.audience / 5);
 
       // print line for this order
       result.append(String.format("  %s: %s (%s seats)\n", play.name, frmt.format(thisAmount / 100), perf.audience));
