@@ -1,18 +1,16 @@
 package theatricalplays;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+
 
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.*;
 
 import static org.approvaltests.Approvals.verify;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StatementPrinterTests {
-
-    @Test
-    void exampleStatement() {
-        Map<String, Play> plays = Map.of(
+     Map<String, Play> plays = Map.of(
                 "hamlet",  new Play("Hamlet",PieceType.tragedy),
                 "as-like", new Play("As You Like It", PieceType.comdey),
                 "othello", new Play("Othello", PieceType.tragedy));
@@ -21,6 +19,9 @@ public class StatementPrinterTests {
                 new Performance("hamlet", 55),
                 new Performance("as-like", 35),
                 new Performance("othello", 40)));
+    @Test
+    void exampleStatement() {
+
 
         StatementPrinter statementPrinter = new StatementPrinter();
         var result = statementPrinter.print(invoice, plays);
@@ -46,4 +47,19 @@ public class StatementPrinterTests {
     //         statementPrinter.print(invoice, plays);
     //     });
     // }
+
+      @Test
+      void test_total_facture() {
+
+        invoice.calculerTotal(plays);
+        assertEquals(1730.00, invoice.totalAmount, 0.0001);
+      }
+      @Test
+      void test_points_fidelites() {
+
+        invoice.calculerTotal(plays);
+        assertEquals(47, invoice.volumeCredits);
+
+
+      }
 }
