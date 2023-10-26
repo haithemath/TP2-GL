@@ -24,7 +24,15 @@ public class StatementPrinterTests {
 
 
         StatementPrinter statementPrinter = new StatementPrinter();
-        var result = statementPrinter.print(invoice, plays);
+        var result = statementPrinter.print(invoice, plays,"text");
+
+        verify(result);
+    }
+
+    @Test
+    void htmlRendu() {
+       StatementPrinter statementPrinter = new StatementPrinter();
+        var result = statementPrinter.print(invoice, plays,"html");
 
         verify(result);
     }
@@ -48,6 +56,11 @@ public class StatementPrinterTests {
     //     });
     // }
 
+
+
+  /*
+  * Tests unitaires
+  */
       @Test
       void test_total_facture() {
 
