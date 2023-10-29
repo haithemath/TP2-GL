@@ -11,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StatementPrinterTests {
      Map<String, Play> plays = Map.of(
-                "hamlet",  new Play("Hamlet",PieceType.tragedy),
-                "as-like", new Play("As You Like It", PieceType.comdey),
-                "othello", new Play("Othello", PieceType.tragedy));
+                "hamlet",   Play.creerPlay("Hamlet",PieceType.tragedy),
+                "as-like",  Play.creerPlay("As You Like It", PieceType.comdey),
+                "othello",  Play.creerPlay("Othello", PieceType.tragedy));
 
         Invoice invoice = new Invoice("BigCo", List.of(
                 new Performance("hamlet", 55),
