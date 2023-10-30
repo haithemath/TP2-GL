@@ -11,6 +11,7 @@ public class Play {
 
    }
 
+   // cette méthode permet de controler l'instanciation de Play
    public  static  Play creerPlay(String name, PieceType type) {
     if(type==null) {
       throw new IllegalArgumentException("le type ne doit pas etre null");

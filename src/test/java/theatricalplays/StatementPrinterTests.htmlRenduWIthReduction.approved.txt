@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Invoice</title>
+</head>
+<body>
+<h1>Invoice</h1>
+<ul>
+<li><strong>Client : </strong>BigCo</li>
+</ul>
+<table border=1 style= "border-spacing: 4px;">
+<thead>
+<tr>
+<th>Piece</th>
+<th>Seats sold</th>
+<th>Price</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hamlet</td>
+<td>55</td>
+<td>$650.00</td>
+</tr>
+<tr>
+<td>As You Like It</td>
+<td>35</td>
+<td>$580.00</td>
+</tr>
+<tr>
+<td>Othello</td>
+<td>40</td>
+<td>$500.00</td>
+</tr>
+<tr>
+<th colspan="2">Total owed:</th>
+<td>$1,730.00</td>
+</tr>
+<tr>
+<th colspan="2">Fidelity points earned:</th>
+<td>47</td>
+</tr>
+</tbody>
+</table>
+<p>You have more than 150 points, so you benefit from a reduction of 15$</p>
+<p><strong>New total : </strong>$1,715.00</p>
+<p>Payement is required under 30 days. We can break your knees if you don't so.</p>
+</body>
+</html>

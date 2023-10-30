@@ -10,12 +10,19 @@ import static org.approvaltests.Approvals.verify;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StatementPrinterTests {
+  //data without reduction
      Map<String, Play> plays = Map.of(
                 "hamlet",   Play.creerPlay("Hamlet",PieceType.tragedy),
                 "as-like",  Play.creerPlay("As You Like It", PieceType.comdey),
                 "othello",  Play.creerPlay("Othello", PieceType.tragedy));
 
-        Invoice invoice = new Invoice("BigCo", List.of(
+        Invoice invoice = new Invoice(new Customer("BigCo", 1, 10), List.of(
+                new Performance("hamlet", 55),
+                new Performance("as-like", 35),
+                new Performance("othello", 40)));
+
+    // data with reduction
+     Invoice invoicewithReduction = new Invoice(new Customer("BigCo", 1, 140), List.of(
                 new Performance("hamlet", 55),
                 new Performance("as-like", 35),
                 new Performance("othello", 40)));
@@ -37,8 +44,16 @@ public class StatementPrinterTests {
         verify(result);
     }
 
+    @Test
+    void htmlRenduWithReduction() {
+        StatementPrinter statementPrinter = new StatementPrinter();
+        var result = statementPrinter.print(invoicewithReduction, plays,"html");
+
+        verify(result);
+
+    }
     // dans notre cas, ce test ne sert à rien puisque on a déjà introduit un nouveau type énumerative qui
-    // va protéger le type de théatre en acceptant que les valeurs definies par ce type-là
+    // va protéger le type de théatre en acceptant uniquement les valeurs definies par ce type-là
 
     // @Test
     // void statementWithNewPlayTypes() {

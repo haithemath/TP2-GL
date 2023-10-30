@@ -10,15 +10,16 @@ import java.util.Locale;
 
 public class Invoice {
 
-  public String customer;
+  public Customer customer;
   public List<Performance> performances;
   float totalAmount = 0;
   int volumeCredits = 0;
   List<Order> detailsOrder = new ArrayList<>();
+  float total_after_reduction = 0;
 
 
 
-  public Invoice(String customer, List<Performance> performances) {
+  public Invoice(Customer customer, List<Performance> performances) {
     this.customer = customer;
     this.performances = performances;
   }
@@ -55,12 +56,17 @@ public class Invoice {
       totalAmount += thisAmount;
     }
     this.totalAmount /=100;
+    this.customer.setPoints(this.customer.getPointsFidelites()+volumeCredits);
+    if(this.customer.getPointsFidelites() >= 150) {
+    this.total_after_reduction = this.totalAmount -15;
+      this.customer.setPoints(this.customer.getPointsFidelites()-150);
+    }
 
   }
 
   StringBuffer toText(Map<String, Play> plays) {
     this.calculerTotal(plays);
-    StringBuffer result = new StringBuffer(String.format("Statement for %s\n", this.customer));
+    StringBuffer result = new StringBuffer(String.format("Statement for %s\n", this.customer.getNom()));
 
     NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
 
@@ -114,14 +120,28 @@ public class Invoice {
         "<td>%s</td>\r\n" + //
         "</tr>\r\n",frmt.format(this.totalAmount), this.volumeCredits));
 
+        if(this.total_after_reduction > 0) {
     result.append(String.format(
     "</tbody>\r\n"+
     "</table>\r\n" + //
+    "<p>You have more than 150 points, so you benefit from a reduction of 15$</p>\r\n"+
+    "<p><strong>New total : </strong>$1,715.00</p>\r\n" + //
     "<p>Payement is required under 30 days. We can break your knees if you don't so.</p>\r\n" + //
     "</body>\r\n" + //
     "</html>"
 
     ));
+        }
+        else {
+    result.append(String.format(
+    "</tbody>\r\n"+
+    "</table>\r\n" + //
+    "<p>Payement is required under 30 days. We can break your knees if you don't so.</p>\r\n"+
+    "</body>\r\n" + //
+    "</html>"
+
+    ));
+        }
         return result;
   }
 
